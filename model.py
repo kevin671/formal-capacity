@@ -314,7 +314,7 @@ class HyperBlock(nn.Module):
         return x
 
 
-class HyperLoopedGPT(nn.Module):
+class TimeDependentLoopedGPT(nn.Module):
     def __init__(self, args):
         super().__init__()
         self.num_loop = args.num_loop
@@ -353,24 +353,3 @@ class HyperLoopedGPT(nn.Module):
         x = self.transformer.ln_f(x)
         logits = self.lm_head(x)  # [b, t, vocab]
         return logits
-
-
-# %%
-if __name__ == "__main__":
-    from argparse import Namespace
-
-    args = Namespace(
-        dmodel=256,
-        vocab=21,
-        maxlen=120,
-        drop=0.1,
-        num_layer=3,
-        head=4,
-        num_loop=100,
-        rpe=True,
-    )
-    model = HyperLoopedGPT(args)
-    print(model)
-    idx = torch.randint(0, 21, (4, 120))
-    print(model(idx).shape)
-# %%
