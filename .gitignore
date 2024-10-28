@@ -16,3 +16,4 @@ tmp/
 out/
 wandb/
 _legacy/
+train.sh
